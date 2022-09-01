@@ -18,6 +18,8 @@
   color: $c-dark;
   border-radius: 50%;
 
+  transition: all ease-in-out 0.3s;
+
   @media (max-width: $tablet) and (orientation: portrait) {
     display: none;
   }
@@ -35,6 +37,8 @@
     background-color: $c-light;
     border: 2px solid $c-light;
     z-index: -1;
+
+    transition: all ease-in-out 0.3s;
   }
 
   svg {
@@ -55,10 +59,11 @@
   }
 
   &:focus {
-    color: $c-purple;
+    color: $c-light;
     outline: none;
 
     &::before {
+      background-color: $c-purple;
       border-color: $c-purple;
     }
 
