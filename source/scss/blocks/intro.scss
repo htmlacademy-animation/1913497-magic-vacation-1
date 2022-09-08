@@ -94,7 +94,7 @@
   font-size: 2.4rem;
   line-height: 1.27;
 
-  animation: fadein 1s;
+  animation: fadein 0.7s ease-out;
 
   @media (min-width: $stop-scaling) {
     width: 509px;
@@ -168,7 +168,7 @@
 @keyframes fadein {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(40px);
   }
 
   to {
