@@ -1,3 +1,7 @@
+:root {
+  --form-field-indentation: 21rem;
+}
+
 .form {
   position: relative;
   display: flex;
@@ -35,7 +39,7 @@
   margin-left: auto;
   padding: 0 5.6rem;
   height: 6rem;
-  width: calc(100% - 21rem);
+  width: calc(100% - var(--form-field-indentation));
   text-transform: uppercase;
   font: inherit;
   font-size: 2.4rem;
@@ -45,7 +49,7 @@
   border-radius: 3rem;
   outline: none;
 
-  animation: fieldAppearance 0.3s ease-in;
+  animation: field-appearance 0.4s linear;
 
   &:focus {
     border: 1px solid $c-purple;
@@ -55,7 +59,6 @@
     margin-right: 30px;
     padding: 0 56px;
     height: 60px;
-    width: calc(100% - 210px);
     font-size: 24px;
     border-radius: 30px;
   }
@@ -68,14 +71,9 @@
     font-size: 1.6rem;
   }
 
-  @media (max-width: $tablet) and (orientation: landscape) {
-    width: calc(100% - 9rem);
-  }
-
   @media (max-width: $mobile) and (orientation: landscape) {
     margin-right: 1rem;
     padding: 0 2.5rem;
-    width: calc(100% - 5rem);
     height: 4rem;
     font-size: 1.6rem;
   }
@@ -148,12 +146,36 @@
   }
 }
 
-@keyframes fieldAppearance {
+@media (min-width: $stop-scaling) {
+  :root {
+    --form-field-indentation: 210px;
+  }
+}
+
+@media (orientation: portrait) {
+  :root {
+    --form-field-indentation: 5rem;
+  }
+}
+
+@media (max-width: $tablet) and (orientation: landscape) {
+  :root {
+    --form-field-indentation: 9rem;
+  }
+}
+
+@media (max-width: $mobile) and (orientation: landscape) {
+  :root {
+    --form-field-indentation: 5rem;
+  }
+}
+
+@keyframes field-appearance {
   from {
     width: 0;
   }
 
   to {
-    width: calc(100% - 21rem);
+    width: calc(100% - var(--form-field-indentation));
   }
 }
