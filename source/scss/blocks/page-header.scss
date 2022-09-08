@@ -35,6 +35,7 @@
   padding: 1rem 0;
   width: 10rem;
   color: $c-light;
+  transition: color 100ms ease-in-out;
 
   @media (min-width: $stop-scaling) {
     top: -5px;
@@ -241,18 +242,22 @@
     display: block;
     color: inherit;
     padding: 0 0.5em 0.5em;
+    transition: all 100ms ease-in-out;
 
     &::after {
       content: "";
       position: absolute;
       bottom: 0;
-      width: 100%;
+      width: 0;
       height: 2px;
       background-color: $c-light;
-      display: none;
-      left: 0;
+      left: initial;
+      right: 0;
+      transition: width 200ms ease-in-out,
+        background-color 100ms ease-in-out,
+        opacity 200ms ease-in-out;
 
-      @media (max-width: $tablet) and (orientation: portrait) {
+      @media (max-width: $tablet) and(orientation: portrait) {
         left: 0;
         right: 0;
         background-color: $c-dark;
@@ -267,7 +272,7 @@
 
     &.active {
       &::after {
-        display: block;
+        width: 100%;
       }
     }
 
@@ -277,8 +282,10 @@
       outline: none;
 
       &::after {
-        opacity: 1;
+        width: 100%;
         background-color: $c-purple;
+        left: 0;
+        right: initial;
       }
     }
   }
