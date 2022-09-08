@@ -32,6 +32,7 @@
 .form__field {
   flex: none;
   margin-right: 3rem;
+  margin-left: auto;
   padding: 0 5.6rem;
   height: 6rem;
   width: calc(100% - 21rem);
@@ -43,6 +44,8 @@
   border: 0;
   border-radius: 3rem;
   outline: none;
+
+  animation: fieldAppearance 0.3s ease-in;
 
   &:focus {
     border: 1px solid $c-purple;
@@ -79,8 +82,6 @@
 }
 
 .form__button {
-  flex-grow: 1;
-
   @media (orientation: portrait) {
     position: relative;
     flex: none;
@@ -144,5 +145,15 @@
     @media (max-width: $mobile) and (orientation: landscape) {
       width: calc(100% - 5rem);
     }
+  }
+}
+
+@keyframes fieldAppearance {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: calc(100% - 21rem);
   }
 }
