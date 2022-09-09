@@ -147,6 +147,8 @@
     li {
       transform: translateY(0);
       opacity: 1;
+
+      transition-delay: 0;
     }
   }
 
@@ -169,7 +171,7 @@
     flex: none;
     margin-bottom: 0.5rem;
 
-    transform: translateY(10px);
+    transform: translateY(1rem);
     opacity: 0;
 
     transition: all 0.2s;
@@ -179,11 +181,11 @@
     }
 
     &:nth-child(2) {
-      transition-delay: 0.3s;
+      transition-delay: 0.2s;
     }
 
     &:last-child {
-      transition-delay: 0.5s;
+      transition-delay: 0.3s;
     }
 
     @media (min-width: $stop-scaling) {
