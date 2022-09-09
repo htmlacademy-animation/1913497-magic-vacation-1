@@ -67,7 +67,7 @@
   &.swiper-slide-next,
   &.swiper-slide-active {
     .slider__item-text {
-      animation: fadein 0.8s ease-out;
+      animation: fadeInRight 0.8s ease-out;
     }
   }
 }
@@ -281,17 +281,5 @@
       height: 0.4rem;
       background-color: $c-light;
     }
-  }
-}
-
-@keyframes fadein {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
   }
 }

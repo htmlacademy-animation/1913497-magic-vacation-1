@@ -35,7 +35,7 @@
   },
   "scripts": {
     "editorconfig": "editorconfig-cli",
-    "stylelint": "stylelint \"source/scss/**/*.scss\" --syntax scss",
+    "stylelint": "stylelint \"source/scss/**/*.scss\" --syntax scss --fix",
     "test": "npm run editorconfig && npm run stylelint && eslint source/js/",
     "build": "webpack",
     "webp": "gulp webp",
