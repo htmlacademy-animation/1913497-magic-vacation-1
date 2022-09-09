@@ -63,12 +63,22 @@
       }
     }
   }
+}
 
-  &.swiper-slide-next,
-  &.swiper-slide-active {
-    .slider__item-text {
-      animation: fadeInRight 0.8s ease-out;
-    }
+.swiper-slide {
+  opacity: 0;
+  transform: translateX(40px);
+
+  transition: all 0.3s ease-out 0.2s;
+
+  &-active,
+  &-next {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  &-next {
+    transition-delay: 0.5s;
   }
 }
 
