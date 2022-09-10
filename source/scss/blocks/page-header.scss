@@ -31,7 +31,7 @@
   position: relative;
   flex: none;
   top: -0.5rem;
-  display: none;
+  display: block;
   padding: 1rem 0;
   width: 10rem;
   color: $c-light;
@@ -185,7 +185,7 @@
   line-height: 1.0418;
   color: $c-light;
 
-  display: none;
+  display: block;
   opacity: 0;
 
   transition: opacity 0.3s cubic-bezier(0.26, 0.87, 0.51, 0.86);
@@ -264,8 +264,8 @@
       background-color: $c-light;
       left: initial;
       right: 0;
-      transition: width 200ms ease-in-out,
-        background-color 100ms ease-in-out,
+      transition: width 300ms ease-in-out,
+ background-color 100ms ease-in-out,
         opacity 200ms ease-in-out;
 
       @media (max-width: $tablet) and(orientation: portrait) {
@@ -283,7 +283,9 @@
 
     &.active {
       &::after {
-        width: 100%;
+        left: initial;
+        right: 0;
+        width: 0;
       }
     }
 

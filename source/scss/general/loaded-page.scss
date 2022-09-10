@@ -1,0 +1,27 @@
+body.loaded {
+  .screen__footer {
+    bottom: 0;
+  }
+
+  .page-header__logo {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .page-header__menu {
+    opacity: 1;
+
+    a.active::after {
+      width: 100%;
+      left: 0;
+      right: initial;
+    }
+  }
+
+  .social-block__toggler {
+    opacity: 1;
+    transform: scale(1);
+
+    animation: pulse 0.3s cubic-bezier(0.26, 0.87, 0.51, 0.86);
+  }
+}
