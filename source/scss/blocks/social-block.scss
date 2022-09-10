@@ -18,7 +18,9 @@
   color: $c-dark;
   border-radius: 50%;
 
-  transition: all ease-in-out 0.3s;
+  transition: color ease-in-out 0.3s,
+    width 0.3s cubic-bezier(0.26, 0.87, 0.51, 0.86),
+    height 0.3s cubic-bezier(0.26, 0.87, 0.51, 0.86);
 
   @media (max-width: $tablet) and (orientation: portrait) {
     display: none;
@@ -38,7 +40,7 @@
     border: 2px solid $c-light;
     z-index: -1;
 
-    transition: all ease-in-out 0.3s;
+    transition: color ease-in-out 0.3s;
   }
 
   svg {
