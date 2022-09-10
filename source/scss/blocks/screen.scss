@@ -48,6 +48,8 @@
   background-color: $c-light;
   z-index: 1;
 
+  transition: top 0.3s, bottom 0.3s;
+
   @media (max-width: $tablet) and (orientation: portrait) {
     width: 3.5rem;
     height: 3.5rem;
