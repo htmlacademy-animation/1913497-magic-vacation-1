@@ -265,7 +265,7 @@
       left: initial;
       right: 0;
       transition: width 200ms ease-in-out,
- background-color 100ms ease-in-out,
+        background-color 100ms ease-in-out,
         opacity 200ms ease-in-out;
 
       @media (max-width: $tablet) and(orientation: portrait) {
