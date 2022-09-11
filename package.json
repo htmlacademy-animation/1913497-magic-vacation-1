@@ -34,9 +34,9 @@
     "write-file-webpack-plugin": "4.5.1"
   },
   "scripts": {
-    "editorconfig": "editorconfig-cli",
-    "stylelint": "stylelint \"source/scss/**/*.scss\" --syntax scss",
-    "test": "npm run editorconfig && npm run stylelint && eslint source/js/",
+    "editorconfig": "editorconfig-cli fix",
+    "stylelint": "stylelint \"source/scss/**/*.scss\" --syntax scss --fix",
+    "test": "npm run editorconfig && npm run stylelint && eslint source/js/ --fix",
     "build": "webpack",
     "webp": "gulp webp",
     "sprite": "gulp sprite",

@@ -49,7 +49,7 @@
   border-radius: 3rem;
   outline: none;
 
-  animation: field-appearance 0.4s linear;
+  animation: fieldAppearance 0.4s linear;
 
   &:focus {
     border: 1px solid $c-purple;
@@ -170,7 +170,7 @@
   }
 }
 
-@keyframes field-appearance {
+@keyframes fieldAppearance {
   from {
     width: 0;
   }
