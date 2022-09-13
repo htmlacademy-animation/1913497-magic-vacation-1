@@ -37,8 +37,8 @@
   color: $c-light;
 
   transition: color 100ms ease-in-out,
-    transform 0.3s cubic-bezier(0.26, 0.87, 0.51, 0.86),
-    opacity 0.3s cubic-bezier(0.26, 0.87, 0.51, 0.86);
+    transform $default-duration $load-page-timing-function,
+    opacity $default-duration $load-page-timing-function;
 
   transform: translateX(-3rem);
   opacity: 0;
@@ -188,7 +188,7 @@
   display: block;
   opacity: 0;
 
-  transition: opacity 0.3s cubic-bezier(0.26, 0.87, 0.51, 0.86);
+  transition: opacity $default-duration $load-page-timing-function;
 
   @media (min-width: $stop-scaling) {
     font-size: 12px;
@@ -265,7 +265,7 @@
       left: initial;
       right: 0;
       transition: width 300ms ease-in-out,
- background-color 100ms ease-in-out,
+        background-color 100ms ease-in-out,
         opacity 200ms ease-in-out;
 
       @media (max-width: $tablet) and(orientation: portrait) {
