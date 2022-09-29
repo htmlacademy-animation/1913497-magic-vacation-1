@@ -163,6 +163,11 @@
     opacity: 0;
     transform: scale(0);
 
+    animation-name: zoomIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0, 0, 0.58, 1.5);
+
     @media (max-width: $tablet) and (orientation: portrait) {
       top: 1rem;
       width: 2.5rem;
@@ -184,7 +189,12 @@
     margin: 0;
 
     opacity: 0;
-    transform: translateX(1rem);
+    transform: translateX(2rem);
+
+    animation-name: fadeInRightSmall;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
 
     @media (max-width: $tablet) and (orientation: portrait) {
       min-height: calc(1.4rem * 2.2);
