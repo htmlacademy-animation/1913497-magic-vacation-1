@@ -247,4 +247,34 @@
     bottom: 2rem;
     right: 1.5rem;
   }
+
+  &::before {
+    animation-name: fadeGameLink;
+    animation-duration: 0.3s;
+    animation-delay: 1.2s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+  }
+
+  span {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+    animation-delay: 1.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+  }
+}
+
+@keyframes fadeGameLink {
+  from {
+    left: 100%;
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    left: 50%;
+    width: 100%;
+    opacity: 1;
+  }
 }
