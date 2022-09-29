@@ -7,16 +7,14 @@
   background-color: $c-dark;
 
   &.active {
-    animation: backgroundAnimation 0.4s ease-out;
+    animation-name: changeBackground;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
   }
 }
 
-@keyframes backgroundAnimation {
-  from {
-    top: 100%;
-  }
-
+@keyframes changeBackground {
   to {
-    top: 0;
+    transform: translateY(-100%);
   }
 }
