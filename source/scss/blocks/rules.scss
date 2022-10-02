@@ -161,10 +161,9 @@
     text-align: center;
 
     opacity: 0;
-    transform: scale(0);
 
-    animation-name: zoomIn;
-    animation-duration: 0.3s;
+    animation-name: zoomRules;
+    animation-duration: $default-duration;
     animation-fill-mode: forwards;
     animation-timing-function: cubic-bezier(0, 0, 0.58, 1.5);
 
@@ -192,7 +191,7 @@
     transform: translateX(2rem);
 
     animation-name: fadeInRightSmall;
-    animation-duration: 0.3s;
+    animation-duration: $default-duration;
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
 
@@ -201,24 +200,12 @@
     }
   }
 
-  &:nth-child(2) {
-    &::before,
-    p {
-      animation-delay: 0.3s;
-    }
-  }
-
-  &:nth-child(3) {
-    &::before,
-    p {
-      animation-delay: 0.6s;
-    }
-  }
-
-  &:nth-child(4) {
-    &::before,
-    p {
-      animation-delay: 0.9s;
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i + 1}) {
+      &::before,
+      p {
+        animation-delay: $rules-delay * $i;
+      }
     }
   }
 }
@@ -250,7 +237,7 @@
 
   &::before {
     animation-name: fadeGameLink;
-    animation-duration: 0.3s;
+    animation-duration: $default-duration;
     animation-delay: 1.2s;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
@@ -258,7 +245,7 @@
 
   span {
     animation-name: fadeIn;
-    animation-duration: 0.3s;
+    animation-duration: $default-duration;
     animation-delay: 1.5s;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
@@ -276,5 +263,21 @@
     left: 50%;
     width: 100%;
     opacity: 1;
+  }
+}
+
+@keyframes zoomRules {
+  from {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    transform: translate(2.25rem, 2.25rem);
+  }
+
+  to {
+    opacity: 1;
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: translate(0);
   }
 }
