@@ -9,7 +9,7 @@ export default (elementSelector, rules) => {
     display: inline-block;
     animation-name: ${rules.name}; 
     animation-duration: ${rules.duration || `.3s`};
-    animation-timing-function: ${rules.timingFunction || `esea-out`};
+    animation-timing-function: ${rules.timingFunction || `ease-out`};
     animation-fill-mode: both;
   `;
 
@@ -18,7 +18,7 @@ export default (elementSelector, rules) => {
       .split(``)
       .map(
           (letter, letterId) =>
-            `<span style="${animationTules} 
+            `<span style="will-change: transform; ${animationTules} 
             animation-delay: ${
   rules.lines[lineId + 1] && rules.lines[lineId + 1][letterId + 1]
     ? rules.lines[lineId + 1][letterId + 1]
@@ -31,7 +31,7 @@ export default (elementSelector, rules) => {
   const newHTML = lines
     .map(
         (line) =>
-          `<span style="display: inline-block;white-space: nowrap; overflow-y: hidden; padding-top: 1rem; margin-bottom: -1rem;">
+          `<span style="display: inline-block;white-space: nowrap; overflow-y: hidden; padding-top: .2em; margin-bottom: -.2em;">
         ${line}
       </span>`
     )
