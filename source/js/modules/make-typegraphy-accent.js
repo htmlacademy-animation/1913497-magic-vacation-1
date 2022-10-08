@@ -1,4 +1,11 @@
-export default (elementSelector, rules) => {
+const defaultRules = {
+  name: `fadeAccentUp`,
+  duration: `1`,
+  delay: `0s`,
+  timingFunction: `ease-out`,
+};
+
+export default (elementSelector, rules = defaultRules) => {
   const element =
     typeof elementSelector === `string`
       ? document.querySelector(elementSelector)
@@ -7,8 +14,9 @@ export default (elementSelector, rules) => {
 
   const animationTules = `
     display: inline-block;
+    animation-delay: ${rules.delay}s;
     animation-name: ${rules.name}; 
-    animation-duration: ${rules.duration || `.3s`};
+    animation-duration: ${rules.duration ? rules.duration + `s` : `.3s`};
     animation-timing-function: ${rules.timingFunction || `ease-out`};
     animation-fill-mode: both;
   `;
@@ -21,9 +29,13 @@ export default (elementSelector, rules) => {
             `<span style="will-change: transform; ${animationTules} 
             animation-delay: ${
   rules.lines[lineId + 1] && rules.lines[lineId + 1][letterId + 1]
-    ? rules.lines[lineId + 1][letterId + 1]
-    : `0s`
-}">${letter}</span>`
+    ? rules.lines[lineId + 1][letterId + 1] + rules.delay
+    : rules.delay
+}s;  animation-duration: ${
+  rules.lines[lineId + 1] && rules.lines[lineId + 1][letterId + 1]
+    ? rules.duration - rules.lines[lineId + 1][letterId + 1]
+    : rules.duration
+}s">${letter}</span>`
       )
       .join(``);
   });
@@ -31,7 +43,7 @@ export default (elementSelector, rules) => {
   const newHTML = lines
     .map(
         (line) =>
-          `<span style="display: inline-block;white-space: nowrap; overflow-y: hidden; padding-top: .2em; margin-bottom: -.2em;">
+          `<span style="display: inline-block;white-space: nowrap; overflow-y: hidden; padding-top: .2em; padding-right: .2em; margin-bottom: -.2em; margin-right: -.2em;">
         ${line}
       </span>`
     )
