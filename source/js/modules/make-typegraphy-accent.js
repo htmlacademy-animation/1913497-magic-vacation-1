@@ -1,9 +1,11 @@
 const defaultRules = {
   name: `fadeAccentUp`,
-  duration: `1`,
-  delay: `0s`,
+  duration: 1,
+  delay: 0,
   timingFunction: `ease-out`,
 };
+
+const MIN_DURATION_COEFFICIENT = 0.2;
 
 export default (elementSelector, rules = defaultRules) => {
   const element =
@@ -21,22 +23,21 @@ export default (elementSelector, rules = defaultRules) => {
     animation-fill-mode: both;
   `;
 
-  const lines = elementText.split(` `).map((line, lineId) => {
+  const lines = elementText.split(` `).map((line) => {
     return line
       .split(``)
-      .map(
-          (letter, letterId) =>
-            `<span style="will-change: transform; ${animationTules} 
+      .map((letter) => {
+        const maxValue =
+          rules.duration - rules.duration * MIN_DURATION_COEFFICIENT;
+        const minValue = 0;
+        const randomDelay = Math.random() * (maxValue - minValue) + minValue;
+        return `<span style="will-change: transform; ${animationTules} 
             animation-delay: ${
-  rules.lines[lineId + 1] && rules.lines[lineId + 1][letterId + 1]
-    ? rules.lines[lineId + 1][letterId + 1] + rules.delay
-    : rules.delay
+  randomDelay + rules.delay
 }s;  animation-duration: ${
-  rules.lines[lineId + 1] && rules.lines[lineId + 1][letterId + 1]
-    ? rules.duration - rules.lines[lineId + 1][letterId + 1]
-    : rules.duration
-}s">${letter}</span>`
-      )
+  rules.duration - randomDelay
+}s">${letter}</span>`;
+      })
       .join(``);
   });
 
