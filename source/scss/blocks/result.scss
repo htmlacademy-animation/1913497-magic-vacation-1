@@ -58,21 +58,24 @@
     z-index: 1;
     right: 22%;
     top: 33%;
-    // transform: rotate(-5deg);
+    opacity: 0;
+    transform: rotate(-5deg);
   }
 
   .leaf-blue-2 {
     z-index: 1;
     right: 53%;
     top: 49%;
-    // transform: rotate(5deg);
+    opacity: 0;
+    transform: rotate(5deg);
   }
 
   .leaf-green {
     z-index: 2;
     top: 55%;
     right: 21%;
-    // transform: rotate(-15deg);
+    opacity: 0;
+    transform: rotate(-15deg);
   }
 
   .suitcase {
@@ -80,15 +83,22 @@
     width: 45rem;
     right: 33%;
     top: 32%;
-
-    // transform: translateY(20rem) scale(5);
+    transform: translateY(20rem) scale(5);
   }
 
   .flamingo {
     z-index: 4;
     top: 46%;
     right: 43%;
-    // transform: translateY(20rem) rotate(-5deg);
+    opacity: 0;
+    transform: translateY(10rem) rotate(-5deg);
+
+    animation-name: fadeFlamingo, animateFlamingo;
+    animation-duration: 0.9s, 2s;
+    animation-delay: 0s, 0.9s;
+    animation-timing-function: cubic-bezier(0.12, 0.98, 0.84, 1.25), linear;
+    animation-fill-mode: both, none;
+    animation-iteration-count: 1, infinite;
   }
 }
 
