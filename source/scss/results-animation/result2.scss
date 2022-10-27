@@ -1,0 +1,109 @@
+@keyframes fadeFlamingo {
+  0% {
+    opacity: 0;
+    transform: translateY(10rem) rotate(-5deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes animateFlamingo {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+
+  20% {
+    transform: translateY(2rem) rotate(-3deg);
+  }
+
+  30% {
+    transform: translateY(1.8rem) rotate(-2.5deg);
+  }
+
+  50% {
+    transform: translateY(0) rotate(0);
+  }
+
+  70% {
+    transform: translateY(-2rem) rotate(3deg);
+  }
+
+  80% {
+    transform: translateY(-1.8rem) rotate(2.5deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes fadeLeafLeft {
+  10% {
+    opacity: 0;
+    transform: rotate(10deg);
+  }
+
+  20% {
+    transform: rotate(-8deg);
+  }
+
+  40% {
+    opacity: 1;
+    transform: rotate(5deg);
+  }
+
+  60% {
+    transform: rotate(-3deg);
+  }
+
+  80% {
+    transform: rotate(1deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(0);
+  }
+}
+
+@keyframes fadeLeafRight {
+  10% {
+    opacity: 0;
+    transform: rotate(-10deg);
+  }
+
+  20% {
+    transform: rotate(8deg);
+  }
+
+  40% {
+    opacity: 1;
+    transform: rotate(-5deg);
+  }
+
+  60% {
+    transform: rotate(3deg);
+  }
+
+  80% {
+    transform: rotate(-1deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(0);
+  }
+}
+
+@keyframes fadeSuitcase {
+  0% {
+    transform: translateY(20rem) scale(0);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}

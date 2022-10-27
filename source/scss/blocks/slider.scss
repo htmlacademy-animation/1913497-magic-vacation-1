@@ -66,19 +66,37 @@
 }
 
 .swiper-slide {
-  opacity: 0;
-  transform: translateX(3rem);
+  .slider__item-text {
+    opacity: 0;
+    transform: translateX(3rem);
 
-  transition: all $default-duration ease-out 0.2s;
+    transition: all $default-duration ease-out 0.2s;
+  }
 
   &-active,
   &-next {
-    transform: translateX(0);
-    opacity: 1;
+    .slider__item-text {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 
   &-next {
-    transition-delay: 0.5s;
+    .slider__item-text {
+      transition-delay: 0.5s;
+    }
+  }
+
+  &:first-child {
+    .slider__item-text {
+      transition-delay: 0.75s;
+    }
+  }
+
+  &:nth-child(2) {
+    .slider__item-text {
+      transition-delay: 1.25s;
+    }
   }
 }
 

@@ -103,6 +103,13 @@
     height: 4rem;
   }
 
+  span,
+  svg {
+    opacity: 0;
+
+    animation: fadeIn $default-duration $rules-delay ease-out forwards;
+  }
+
   svg {
     @include center;
     display: none;
@@ -121,6 +128,11 @@
     @media (max-width: $tablet) and (orientation: landscape) {
       display: block;
     }
+  }
+
+  &::before {
+    opacity: 0;
+    animation: fadeIn $default-duration ease-out forwards;
   }
 }
 
@@ -173,6 +185,7 @@
 @keyframes appearanceField {
   from {
     width: 0;
+    padding: 0;
   }
 
   to {
