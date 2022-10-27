@@ -1909,7 +1909,7 @@ body.loaded .social-block__toggler::before {
   left: 0;
   z-index: 100;
   opacity: 0.5;
-  display: block;
+  display: none;
 }
 
 .game__button {
