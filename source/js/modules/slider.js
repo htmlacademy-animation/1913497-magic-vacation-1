@@ -3,36 +3,54 @@ import Swiper from "swiper";
 export default () => {
   let storySlider;
   let sliderContainer = document.getElementById(`story`);
+  const body = document.body;
   sliderContainer.style.backgroundImage = `url("img/slide1.jpg"), linear-gradient(180deg, rgba(83, 65, 118, 0) 0%, #523E75 16.85%)`;
 
   const setSlider = function () {
-    if (((window.innerWidth / window.innerHeight) < 1) || window.innerWidth < 769) {
+    if (window.innerWidth / window.innerHeight < 1 || window.innerWidth < 769) {
       storySlider = new Swiper(`.js-slider`, {
         pagination: {
           el: `.swiper-pagination`,
-          type: `bullets`
+          type: `bullets`,
         },
         keyboard: {
-          enabled: true
+          enabled: true,
         },
         on: {
           slideChange: () => {
-            if (storySlider.activeIndex === 0 || storySlider.activeIndex === 1) {
+            body.classList = `loaded is-story`;
+            if (
+              storySlider.activeIndex === 0 ||
+              storySlider.activeIndex === 1
+            ) {
+              body.classList.add(`slider-one`);
               sliderContainer.style.backgroundImage = `url("img/slide1.jpg"), linear-gradient(180deg, rgba(83, 65, 118, 0) 0%, #523E75 16.85%)`;
-            } else if (storySlider.activeIndex === 2 || storySlider.activeIndex === 3) {
+            } else if (
+              storySlider.activeIndex === 2 ||
+              storySlider.activeIndex === 3
+            ) {
+              body.classList.add(`slider-two`);
               sliderContainer.style.backgroundImage = `url("img/slide2.jpg"), linear-gradient(180deg, rgba(45, 54, 179, 0) 0%, #2A34B0 16.85%)`;
-            } else if (storySlider.activeIndex === 4 || storySlider.activeIndex === 5) {
+            } else if (
+              storySlider.activeIndex === 4 ||
+              storySlider.activeIndex === 5
+            ) {
+              body.classList.add(`slider-three`);
               sliderContainer.style.backgroundImage = `url("img/slide3.jpg"), linear-gradient(180deg, rgba(92, 138, 198, 0) 0%, #5183C4 16.85%)`;
-            } else if (storySlider.activeIndex === 6 || storySlider.activeIndex === 7) {
+            } else if (
+              storySlider.activeIndex === 6 ||
+              storySlider.activeIndex === 7
+            ) {
+              body.classList.add(`slider-four`);
               sliderContainer.style.backgroundImage = `url("img/slide4.jpg"), linear-gradient(180deg, rgba(45, 39, 63, 0) 0%, #2F2A42 16.85%)`;
             }
           },
           resize: () => {
             storySlider.update();
-          }
+          },
         },
         observer: true,
-        observeParents: true
+        observeParents: true,
       });
     } else {
       storySlider = new Swiper(`.js-slider`, {
@@ -40,33 +58,39 @@ export default () => {
         slidesPerGroup: 2,
         pagination: {
           el: `.swiper-pagination`,
-          type: `fraction`
+          type: `fraction`,
         },
         navigation: {
           nextEl: `.js-control-next`,
           prevEl: `.js-control-prev`,
         },
         keyboard: {
-          enabled: true
+          enabled: true,
         },
         on: {
           slideChange: () => {
+            body.classList = `loaded is-story`;
+
             if (storySlider.activeIndex === 0) {
+              body.classList.add(`slider-one`);
               sliderContainer.style.backgroundImage = `url("img/slide1.jpg")`;
             } else if (storySlider.activeIndex === 2) {
+              body.classList.add(`slider-two`);
               sliderContainer.style.backgroundImage = `url("img/slide2.jpg")`;
             } else if (storySlider.activeIndex === 4) {
+              body.classList.add(`slider-three`);
               sliderContainer.style.backgroundImage = `url("img/slide3.jpg")`;
             } else if (storySlider.activeIndex === 6) {
+              body.classList.add(`slider-four`);
               sliderContainer.style.backgroundImage = `url("img/slide4.jpg")`;
             }
           },
           resize: () => {
             storySlider.update();
-          }
+          },
         },
         observer: true,
-        observeParents: true
+        observeParents: true,
       });
     }
   };

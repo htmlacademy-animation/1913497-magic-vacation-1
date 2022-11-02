@@ -1,4 +1,5 @@
 import throttle from "lodash/throttle";
+const body = document.body;
 
 export default class FullPageScroll {
   constructor() {
@@ -63,7 +64,11 @@ export default class FullPageScroll {
   }
 
   changeVisibilityDisplay() {
-
+    if (this.screenElements[this.activeScreen].id === `story`) {
+      body.classList.add(`is-story`);
+    } else {
+      body.classList.remove(`is-story`);
+    }
     if (
       this.prevScreen === `story` &&
       this.screenElements[this.activeScreen].id === `prizes`

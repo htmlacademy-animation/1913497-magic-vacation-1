@@ -1,0 +1,118 @@
+body.loaded.is-story {
+  &.slider-two,
+  &.slider-three {
+    .page-header__menu {
+      a:hover {
+        color: $c-dark-blue;
+
+        &::after {
+          background-color: $c-dark-blue;
+        }
+      }
+    }
+
+    .slider__control {
+      color: $c-dark-blue;
+
+      &:hover {
+        color: $c-blue;
+      }
+
+      &:focus {
+        color: $c-blue;
+
+        &::before {
+          border-color: $c-blue;
+        }
+      }
+    }
+
+    .social-block__toggler {
+      color: $c-dark-blue;
+
+      &:hover,
+      .social-block--active & {
+        color: $c-blue;
+      }
+
+      &:focus {
+        color: $c-light;
+
+        &::before {
+          background-color: $c-blue;
+          border-color: $c-blue;
+        }
+      }
+    }
+
+    .social-block__link {
+      &:hover {
+        color: $c-blue;
+      }
+
+      &:focus {
+        color: $c-blue;
+        background-color: $c-light;
+        border-color: $c-blue;
+      }
+    }
+  }
+
+  &.slider-three {
+    .page-header__menu {
+      a:hover {
+        color: $c-dark-blue;
+
+        &::after {
+          background-color: $c-dark-blue;
+        }
+      }
+    }
+
+    .slider__control {
+      color: $c-dark-blue;
+
+      &:hover {
+        color: $c-blue;
+      }
+
+      &:focus {
+        color: $c-blue;
+
+        &::before {
+          border-color: $c-blue;
+        }
+      }
+    }
+
+    .social-block__toggler {
+      color: $c-dark-blue;
+
+      &:hover,
+      .social-block--active & {
+        color: $c-blue;
+      }
+
+      &:focus {
+        color: $c-light;
+
+        &::before {
+          background-color: $c-blue;
+          border-color: $c-blue;
+        }
+      }
+    }
+
+    .social-block__link {
+      &:hover {
+        color: $c-blue;
+      }
+
+      &:focus {
+        color: $c-blue;
+        background-color: $c-light;
+        border-color: $c-blue;
+      }
+    }
+  }
+}
