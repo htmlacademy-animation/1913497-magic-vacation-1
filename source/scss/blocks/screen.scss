@@ -47,7 +47,9 @@
   background-color: $c-light;
   z-index: 1;
 
-  transition: bottom $default-duration $load-page-timing-function;
+  transition: bottom $default-duration $load-page-timing-function,
+    width $default-duration ease,
+ height $default-duration ease;
 
   @media (max-width: $tablet) and (orientation: portrait) {
     width: 3.5rem;
@@ -75,11 +77,15 @@
 .screen__footer-wrapper {
   @include container;
 
+  will-change: opacity;
+  transition: opacity $default-duration ease;
+
   @media (max-width: $tablet) and (orientation: portrait) {
     opacity: 0;
 
     .screen__footer--full & {
       opacity: 1;
+      transition: opacity $default-duration ease $default-duration;
     }
   }
 
@@ -88,6 +94,7 @@
 
     .screen__footer--full & {
       opacity: 1;
+      transition: opacity $default-duration ease $default-duration;
     }
   }
 }
@@ -103,12 +110,16 @@
   color: $c-dark;
   z-index: 1;
 
+  will-change: opacity;
+  transition: opacity $default-duration ease;
+
   @media (max-width: $tablet) and (orientation: portrait) {
     display: block;
 
     .screen__footer--full & {
       opacity: 0;
       pointer-events: none;
+      transition: opacity $default-duration ease;
     }
   }
 
@@ -118,6 +129,7 @@
     .screen__footer--full & {
       opacity: 0;
       pointer-events: none;
+      transition: opacity $default-duration ease;
     }
   }
 
@@ -142,6 +154,9 @@
   color: $c-dark;
   z-index: 1;
 
+  will-change: opacity;
+  transition: opacity $default-duration ease;
+
   @media (max-width: $tablet) and (orientation: portrait) {
     display: block;
     opacity: 0;
@@ -149,6 +164,7 @@
 
     .screen__footer--full & {
       opacity: 1;
+      transition: opacity $default-duration ease $default-duration;
       pointer-events: auto;
     }
   }
@@ -160,6 +176,7 @@
 
     .screen__footer--full & {
       opacity: 1;
+      transition: opacity $default-duration ease $default-duration;
       pointer-events: auto;
     }
   }
@@ -293,9 +310,9 @@
 .screen--story {
   background-color: $c-dark;
   background-image: url("../img/slide1.jpg"),
-    url("../img/slide2.jpg"),
+ url("../img/slide2.jpg"),
     url("../img/slide3.jpg"),
-    url("../img/slide4.jpg");
+ url("../img/slide4.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
