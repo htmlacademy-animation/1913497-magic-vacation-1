@@ -296,6 +296,9 @@
   line-height: 1.2;
   color: $c-light;
 
+  will-change: opacity;
+  animation: fadeIn $default-duration ease-out 0.5s both;
+
   @media (min-width: $stop-scaling) {
     margin: auto auto 10px;
     min-width: 340px;
@@ -328,6 +331,9 @@
     height: 4rem;
     color: $c-dark;
 
+    will-change: opacity, transform;
+    animation: rollInRight $default-duration ease-out 0.8s both;
+
     @media (min-width: $stop-scaling) {
       margin-left: 15px;
       width: 40px;
@@ -343,6 +349,9 @@
       border: 2px solid $c-light;
       border-radius: 50%;
       z-index: -1;
+
+      will-change: opacity;
+      animation: fadeIn $default-duration ease-out 0.8s both;
     }
   }
 
