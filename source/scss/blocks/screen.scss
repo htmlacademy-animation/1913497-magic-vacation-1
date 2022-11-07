@@ -49,7 +49,7 @@
 
   transition: bottom $default-duration $load-page-timing-function,
     width $default-duration ease,
- height $default-duration ease;
+    height $default-duration ease;
 
   @media (max-width: $tablet) and (orientation: portrait) {
     width: 3.5rem;
@@ -310,9 +310,9 @@
 .screen--story {
   background-color: $c-dark;
   background-image: url("../img/slide1.jpg"),
- url("../img/slide2.jpg"),
+    url("../img/slide2.jpg"),
     url("../img/slide3.jpg"),
- url("../img/slide4.jpg");
+    url("../img/slide4.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
