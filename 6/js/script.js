@@ -10765,6 +10765,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (() => {
   window.addEventListener(`load`, () => {
     document.body.classList.add(`loaded`);
+    document.body.classList.add(`slider-one`);
   });
 });
 
