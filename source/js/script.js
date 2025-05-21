@@ -10,6 +10,7 @@ import social from "./modules/social.js";
 import FullPageScroll from "./modules/full-page-scroll";
 import pageLoad from "./modules/page-load";
 import applyTypography from "./applyTypography.js";
+import restartAnimations from "./restartAnimations.js";
 
 // init modules
 pageLoad();
@@ -22,7 +23,7 @@ result();
 form();
 social();
 applyTypography();
-
+restartAnimations();
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
