@@ -73,6 +73,7 @@
   </g>
   <g id="largeClouds">
     <animateTransform
+      id="cloudMove"
       attributeName="transform"
       type="translate"
       values="120; 0"
@@ -119,7 +120,38 @@
     fill="none"
     stroke="none"
   />
-  <g id="suitcase">
+
+  <g
+    transform-origin="254.22 275.9"
+    id="suitcase"
+    transform="translate(-223 -276)"
+    opacity="0"
+  >
+    <animate
+      attributeName="opacity"
+      to="1"
+      dur="0.35s"
+      fill="freeze"
+      begin="cloudMove.end"
+      additive="sum"
+    />
+    <animateMotion
+      begin="cloudMove.end"
+      dur="1.75s"
+      fill="freeze"
+      additive="sum"
+      path="M179,111c24.19-9.24,29.8-15.84,29.42-20.44C207.18,75.43,138.73,51.78,96,84c-2.93,2.21-31.66,24.52-29,54,3.54,39.18,59.83,61.15,75.7,67.35,53.65,20.94,94.43,8.79,101.78,27.18,2.89,7.25.78,19.69-21.48,42.47"
+    />
+    <animateTransform
+      attributeName="transform"
+      type="scale"
+      values="0; 0.2; 0.3; 0.4; 0.5; 0.6; 0.7; 0.8; 0.9; 1"
+      dur="1.75s"
+      fill="freeze"
+      additive="sum"
+      begin="cloudMove.end"
+    />
+
     <g>
       <path
         d="M251.89,328.88a3.54,3.54,0,0,0,3.53-3.53v-5.07a3.53,3.53,0,1,0-7.06,0v5.07a3.55,3.55,0,0,0,3.53,3.53"
