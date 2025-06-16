@@ -39,18 +39,17 @@
     <animateTransform
       attributeName="transform"
       type="rotate"
-      from="0"
-      to="55"
-      dur="0.3s"
+      values="55; -15; 10; -5; 0"
+      dur="2s"
       fill="freeze"
       additive="sum"
     />
     <animateTransform
       attributeName="transform"
       type="translate"
-      from="0"
-      to="0 13"
-      dur="0.3s"
+      from="0 13"
+      to="0"
+      dur=".5s"
       fill="freeze"
       additive="sum"
     />
@@ -84,18 +83,18 @@
     <animateTransform
       attributeName="transform"
       type="translate"
-      from="0"
-      to="0 160"
-      dur="0.3s"
+      values="0 160; 0; 10 40; 0; -20 -10; 0; 10 20; 0; -10 -10; 0"
+      from="0 160"
+      to="0"
+      dur="2s"
       fill="freeze"
       additive="sum"
     />
     <animateTransform
       attributeName="transform"
       type="rotate"
-      from="0"
-      to="35"
-      dur="0.3s"
+      values="35; 0; -30; 0; -20; 0; 15; 0; 10; 0"
+      dur="2s"
       fill="freeze"
       additive="sum"
     />
@@ -138,20 +137,27 @@
     x1="107.65"
     y1="166.71"
     x2="107.65"
-    y2="289.02"
+    y2="300"
     fill="none"
     stroke="#fff"
     stroke-linecap="round"
     stroke-miterlimit="10"
     stroke-width="2"
-    transform-origin="107.65 289.02"
+    transform-origin="107.65 300"
   >
     <animateTransform
       attributeName="transform"
       type="translate"
-      from="0"
-      to="0 160"
-      dur="0.3s"
+      values="0 160; 0; 0 40; 0; 0 -10; 0; 0 20; 0; 0 -10; 0"
+      dur="2s"
+      fill="freeze"
+      additive="sum"
+    />
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      values="0; 0; 4; 0; -8; 0; 4; 0; -4; 0"
+      dur="2s"
       fill="freeze"
       additive="sum"
     />
