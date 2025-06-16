@@ -333,8 +333,18 @@
     <animateTransform
       attributeName="transform"
       type="translate"
-      from="0"
-      to="-50 65"
+      from="-50 65"
+      to="0"
+      dur="0.3s"
+      fill="freeze"
+      additive="sum"
+    />
+    <animateTransform
+      id="rotateBird"
+      attributeName="transform"
+      type="rotate"
+      from="-35"
+      to="0"
       dur="0.3s"
       fill="freeze"
       additive="sum"
@@ -342,13 +352,28 @@
     <animateTransform
       attributeName="transform"
       type="rotate"
-      from="0"
-      to="-35"
-      dur="0.3s"
+      values="0; 0; -35; -35; 0"
+      keyTimes="0; 0.2; 0.5; 0.7; 1"
+      dur="2s"
+      begin="rotateBird.end"
       fill="freeze"
       additive="sum"
+      repeatCount="indefinite"
     />
+    <animateTransform
+      attributeName="transform"
+      type="translate"
+      values="0 0; 0 0; -15 15; -15 15; 0 0"
+      keyTimes="0; 0.3; 0.5; 0.8; 1"
+      dur="2s"
+      begin="rotateBird.end + 0.2s"
+      fill="freeze"
+      additive="sum"
+      repeatCount="indefinite"
+    />
+
     <path
+      id="wing"
       d="M279.2,183.8A4.89,4.89,0,0,1,283,179h0l21.07-5.4c-7.78,14.84-19.18,15.07-20,15.07h0a4.9,4.9,0,0,1-4.85-4.9"
       fill="#fff"
       transform-origin="279.2 183.8"
