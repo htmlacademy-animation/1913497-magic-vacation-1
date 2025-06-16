@@ -83,7 +83,7 @@
     <animateTransform
       attributeName="transform"
       type="translate"
-      values="0 160; 0; 10 40; 0; -20 -10; 0; 10 20; 0; -10 -10; 0"
+      values="0 160; 0; 10 40; 0; -20 -10; 0; 10 20; 0; 10 -10; 0"
       from="0 160"
       to="0"
       dur="2s"
@@ -156,7 +156,7 @@
     <animateTransform
       attributeName="transform"
       type="rotate"
-      values="0; 0; 4; 0; -8; 0; 4; 0; -4; 0"
+      values="0; 0; 4; 0; -8; 0; 4; 0; 4; 0"
       dur="2s"
       fill="freeze"
       additive="sum"
