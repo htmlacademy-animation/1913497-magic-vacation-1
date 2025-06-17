@@ -89,11 +89,15 @@
       dur="2s"
       fill="freeze"
       additive="sum"
+      calcMode="paced"
+      keySplines="0.185,0.675,0,0.995"
     />
     <animateTransform
       attributeName="transform"
       type="rotate"
       values="35; 0; -30; 0; -20; 0; 15; 0; 10; 0"
+      calcMode="paced"
+      keySplines="0.185,0.675,0,0.995"
       dur="2s"
       fill="freeze"
       additive="sum"
@@ -165,13 +169,23 @@
 
   <g id="largeLeaf" transform-origin="177.58 288.16">
     <animateTransform
+      id="showLargeLeaf"
       attributeName="transform"
       type="rotate"
-      from="0"
-      to="68"
-      dur="0.3s"
+      values="68; 0; -10; 0; 5"
+      dur=".8s"
       fill="freeze"
       additive="sum"
+    />
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      values="0; -5; 0"
+      dur="1s"
+      begin="showLargeLeaf.end"
+      fill="freeze"
+      additive="sum"
+      repeatCount="indefinite"
     />
     <path
       d="M141.77,204.16c24.1,32.45,35.81,84,35.81,84"
@@ -204,23 +218,27 @@
   </g>
   <g id="smallLeaf" transform-origin="178.25 288.28">
     <animateTransform
+      id="showSmallLeaf"
       attributeName="transform"
       type="rotate"
-      from="0"
-      to="32"
-      dur="0.3s"
+      values="32; 0; -10; 0; 5; 0"
+      dur="1s"
       fill="freeze"
       additive="sum"
     />
+
     <animateTransform
+      id="showSmallLeaf"
       attributeName="transform"
-      type="translate"
-      from="0"
-      to="0 10"
-      dur="0.3s"
+      type="rotate"
+      values="0; -5; 0"
+      dur="0.8s"
       fill="freeze"
+      begin="showSmallLeaf.end"
       additive="sum"
+      repeatCount="indefinite"
     />
+
     <path
       d="M183.79,264.77c2.3,9.1-2.27,18.12-2.27,18.12s-8.32-5.74-10.63-14.85,2.27-18.12,2.27-18.12,8.32,5.75,10.63,14.85"
       fill="#3b7bf2"
