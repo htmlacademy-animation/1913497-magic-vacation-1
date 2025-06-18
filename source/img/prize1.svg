@@ -493,6 +493,7 @@
         stroke-width="2"
       >
         <animateTransform
+          id="prize1CloudMove"
           attributeName="transform"
           type="translate"
           to="50 0"
