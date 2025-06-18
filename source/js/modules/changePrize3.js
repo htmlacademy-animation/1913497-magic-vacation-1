@@ -5,7 +5,7 @@ export default () => {
 
   prize3.src = `img/prize3-from.svg`;
 
-  setTimeout(() => {
+  return setTimeout(() => {
     prize3.src = `img/prize3-to.svg`;
   }, 1867);
 };
