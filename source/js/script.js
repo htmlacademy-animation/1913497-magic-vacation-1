@@ -11,6 +11,7 @@ import FullPageScroll from "./modules/full-page-scroll";
 import pageLoad from "./modules/page-load";
 import applyTypography from "./applyTypography.js";
 import restartAnimations from "./restartAnimations.js";
+import changePrize3 from "./modules/changePrize3.js";
 
 // init modules
 pageLoad();
@@ -24,6 +25,7 @@ form();
 social();
 applyTypography();
 restartAnimations();
+changePrize3();
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
