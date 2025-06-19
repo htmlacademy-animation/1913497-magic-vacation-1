@@ -28,12 +28,13 @@ export default () => {
     }
 
     if (prizeId === `result3`) {
+      const delay = index * 50 + index * 5;
       setTimeout(() => {
         letter.style = `
-        animation: fallLetterOut 0.5s ease-in-out alternate both;
+        animation: fadeOut 0.3s ease-out both, fallLetterOut 0.5s ease-in-out both;
       `;
         letter.querySelector(`#fillLetter`).beginElement();
-      }, (index + 1) * 100);
+      }, delay);
     } else {
       letter.style = `
         transform-origin: center;
