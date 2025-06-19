@@ -1,3 +1,5 @@
+import makeResultAnimation from "./make-result-animation";
+
 export default () => {
   let showResultEls = document.querySelectorAll(`.js-show-result`);
   let results = document.querySelectorAll(`.screen--result`);
@@ -12,8 +14,10 @@ export default () => {
         let targetEl = [].slice.call(results).filter(function (el) {
           return el.getAttribute(`id`) === target;
         });
+
         targetEl[0].classList.add(`screen--show`);
         targetEl[0].classList.remove(`screen--hidden`);
+        makeResultAnimation();
       });
     }
 
