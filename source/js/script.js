@@ -12,6 +12,7 @@ import pageLoad from "./modules/page-load";
 import applyTypography from "./applyTypography.js";
 import restartAnimations from "./restartAnimations.js";
 import changePrize3 from "./modules/changePrize3.js";
+import drawCloak from "./modules/game-counter.js";
 
 // init modules
 pageLoad();
@@ -26,6 +27,8 @@ social();
 applyTypography();
 restartAnimations();
 changePrize3();
+
+requestAnimationFrame(drawCloak);
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
