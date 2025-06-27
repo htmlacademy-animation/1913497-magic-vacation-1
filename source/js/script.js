@@ -10,9 +10,8 @@ import social from "./modules/social.js";
 import FullPageScroll from "./modules/full-page-scroll";
 import pageLoad from "./modules/page-load";
 import applyTypography from "./applyTypography.js";
-import restartAnimations from "./restartAnimations.js";
-import changePrize3 from "./modules/changePrize3.js";
 import drawCloak from "./modules/game-counter.js";
+import applyPrizeAnimation from "./modules/apply-prize-animation.js";
 
 // init modules
 pageLoad();
@@ -25,10 +24,9 @@ result();
 form();
 social();
 applyTypography();
-restartAnimations();
-changePrize3();
 
 requestAnimationFrame(drawCloak);
+requestAnimationFrame(applyPrizeAnimation);
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
