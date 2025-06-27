@@ -188,6 +188,14 @@
         width: 7rem;
       }
     }
+
+    .prizes__desc b {
+      width: 5rem;
+
+      @media (min-width: $stop-scaling) {
+        width: 55px;
+      }
+    }
   }
 
   &--codes {
@@ -212,6 +220,14 @@
 
       @media (max-width: $mobile) and (orientation: landscape) {
         width: 10rem;
+      }
+    }
+
+    .prizes__desc b {
+      width: 18rem;
+
+      @media (min-width: $stop-scaling) {
+        width: 195px;
       }
     }
   }
