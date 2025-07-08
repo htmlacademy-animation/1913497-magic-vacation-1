@@ -17,6 +17,10 @@ let calfImgDom = new Image();
 calfImgDom.src = `/img/module-4/win-primary-images/sea-calf-2.png`;
 let snowImgDom = new Image();
 snowImgDom.src = `/img/module-4/win-primary-images/snowflake.png`;
+let largeTreeImgDom = new Image();
+largeTreeImgDom.src = `/img/module-4/win-primary-images/tree 2.png`;
+let smallTreeImgDom = new Image();
+smallTreeImgDom.src = `/img/module-4/win-primary-images/tree.png`;
 
 // ice parameters
 const iceWidth = 408;
@@ -42,10 +46,22 @@ const rightSnowY = wh / 1.7;
 const snowAnimationDelay = 400;
 const snowAnimationDuration = 1000;
 
+// tree parameters
+const largeTreeWidth = 50;
+const largeTreeHeight = 159;
+const largeTreeX = ww / 2 + largeTreeWidth;
+const largeTreeY = wh / 2;
+const smallTreeWidth = 38;
+const smallTreeHeight = 101;
+const smallTreeX = ww / 2 + largeTreeWidth * 2;
+const smallTreeY = wh / 2 + smallTreeHeight / 1.7;
+const treeAnimationDelay = 700;
+const treeTranslateFrom = 200;
+
 // animation vars
 let translateCalfY = 0;
 let rotateCalf = 0;
-let showShows = 0;
+let showSnows = 0;
 let snowTranslateFrom = snowAnimationDelay;
 let snowTranslateTo = snowTranslateFrom + snowAnimationDuration;
 let snowTranslateFromDelayed = snowTranslateFrom + snowAnimationDuration / 3;
@@ -54,6 +70,8 @@ let leftSnowTranslateStartPoint = 5;
 let rightSnowTranslateStartPoint = 5;
 let leftSnowTranslateY = leftSnowTranslateStartPoint;
 let rightSnowTranslateY = rightSnowTranslateStartPoint;
+let showTree = 0;
+let translateYTree = 0;
 
 const drawCalf = (passed) => {
   const durations = [200, 200, 200, 250, 250, 300, 300, 400];
@@ -98,7 +116,7 @@ const drawSnows = (passed) => {
   const opacityProgress = Math.min((passed - from) / opacityDuration, 1);
 
   if (passed > from && passed < from + opacityDuration) {
-    showShows = opacityProgress * 1;
+    showSnows = opacityProgress * 1;
   }
 
   if (passed > from && passed > snowTranslateFrom && passed < snowTranslateTo) {
@@ -136,7 +154,7 @@ const drawSnows = (passed) => {
     rightSnowTranslateStartPoint = -rightSnowTranslateStartPoint;
   }
 
-  winCtx.globalAlpha = showShows;
+  winCtx.globalAlpha = showSnows;
 
   winCtx.drawImage(
       snowImgDom,
@@ -156,6 +174,33 @@ const drawSnows = (passed) => {
       rightSnowSize
   );
   winCtx.setTransform(1, 0, 0, 1, 0, 0);
+  winCtx.globalAlpha = 1;
+};
+
+const drawTree = (passed) => {
+  const from = treeAnimationDelay;
+  const duration = 400;
+  const progress = Math.min((passed - from) / duration, 1);
+
+  if (passed > from && passed < from + duration) {
+    showTree = progress * 1;
+    translateYTree = getAnimationTick(
+        largeTreeY + treeTranslateFrom,
+        largeTreeY,
+        progress
+    );
+  }
+
+  winCtx.globalAlpha = showTree;
+  winCtx.drawImage(
+      largeTreeImgDom,
+      largeTreeX,
+      translateYTree,
+      largeTreeWidth,
+      largeTreeHeight
+  );
+  winCtx.setTransform(1, 0, 0, 1, 0, 0);
+  winCtx.globalAlpha = 1;
 };
 
 const draw = (timestamp) => {
@@ -170,8 +215,17 @@ const draw = (timestamp) => {
     winCtx.clearRect(0, 0, ww, wh);
     winCtx.save();
 
+    drawTree(passed);
+    winCtx.drawImage(
+        smallTreeImgDom,
+        smallTreeX,
+        smallTreeY,
+        smallTreeWidth,
+        smallTreeHeight
+    );
     drawCalf(passed);
     drawSnows(passed);
+
     winCtx.restore();
   } else {
     // screen unactive
