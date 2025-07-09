@@ -1,4 +1,4 @@
-import {getAnimationTick} from "./canvas-utils";
+import {getAnimationTick, getBezierPoint} from "./canvas-utils";
 
 // global window vars
 let ww = window.innerWidth;
@@ -21,6 +21,8 @@ let largeTreeImgDom = new Image();
 largeTreeImgDom.src = `/img/module-4/win-primary-images/tree 2.png`;
 let smallTreeImgDom = new Image();
 smallTreeImgDom.src = `/img/module-4/win-primary-images/tree.png`;
+let airplaneImgDom = new Image();
+airplaneImgDom.src = `/img/module-4/win-primary-images/airplane.png`;
 
 // ice parameters
 const iceWidth = 408;
@@ -67,6 +69,18 @@ const traceFinalPointX = backXAxios + maxBackCicleRadius * 2.7;
 const traceFinalPointY = backTopYPoint + maxBackCicleRadius * 0.5;
 
 // airplane parameters
+const airplaneSize = 200;
+const airplaneOffset = 46;
+const airplanePathPoint1 = {x: backXAxios, y: backTopYPoint};
+const airplanePathPoint2 = {
+  x: backXAxios + (traceFinalPointX - backXAxios) * 0.4,
+  y: backTopYPoint,
+};
+const airplanePathPoint3 = {
+  x: traceFinalPointX - (traceFinalPointX - backXAxios) / 2,
+  y: traceFinalPointY + (traceFinalPointY - backTopYPoint) * 1.5,
+};
+const airplanePathPoint4 = {x: traceFinalPointX, y: traceFinalPointY};
 
 // animation vars
 let translateCalfY = 0;
@@ -87,6 +101,8 @@ let backRadius = 0;
 let backOpacity = 0;
 let traceToPointX = backXAxios;
 let traceToPointY = backTopYPoint;
+let airplaneXPosition = backXAxios;
+let airplaneYPosition = backTopYPoint;
 
 const drawCalf = (passed) => {
   const durations = [200, 200, 200, 250, 250, 300, 300, 400];
@@ -227,48 +243,58 @@ const drawBackAndAirPlane = (passed) => {
   const opacityDuration = 400;
   const animationDuration = 900;
   const opacityProgress = Math.min((passed - from) / opacityDuration, 1);
-  const animationDurationProgress = Math.min(
-      (passed - from) / animationDuration,
-      1
-  );
+  const animationProgress = Math.min((passed - from) / animationDuration, 1);
 
   if (passed > from && passed < from + opacityDuration) {
     backOpacity = opacityProgress * 1;
   }
   if (passed > from && passed < from + animationDuration) {
-    backRadius = animationDurationProgress * maxBackCicleRadius;
+    backRadius = animationProgress * maxBackCicleRadius;
     backCenterYPoint = getAnimationTick(
         backTopYPoint,
         backTopYPoint + maxBackCicleRadius,
-        animationDurationProgress
+        animationProgress
     );
     traceToPointX = getAnimationTick(
         backXAxios,
         traceFinalPointX,
-        animationDurationProgress
+        animationProgress
     );
     traceToPointY = getAnimationTick(
         backTopYPoint,
         traceFinalPointY,
-        animationDurationProgress
+        animationProgress
     );
+
+    const currentPos = getBezierPoint(
+        animationProgress,
+        airplanePathPoint1,
+        airplanePathPoint2,
+        airplanePathPoint3,
+        airplanePathPoint4
+    );
+
+    airplaneXPosition = currentPos.x;
+    airplaneYPosition = currentPos.y;
   } else if (passed > from + animationDuration) {
     backRadius = maxBackCicleRadius;
     backCenterYPoint = backTopYPoint + maxBackCicleRadius;
     traceToPointX = traceFinalPointX;
     traceToPointY = traceFinalPointY;
+    airplaneXPosition = airplanePathPoint4.x;
+    airplaneYPosition = airplanePathPoint4.y;
   }
 
   winCtx.globalAlpha = backOpacity;
   winCtx.arc(backXAxios, backCenterYPoint, backRadius, 0, 2 * Math.PI);
-  winCtx.moveTo(backXAxios, backTopYPoint);
+  winCtx.moveTo(airplanePathPoint1.x, airplanePathPoint1.y);
   winCtx.bezierCurveTo(
       backXAxios + (traceToPointX - backXAxios) * 0.4,
       backTopYPoint,
       traceToPointX - (traceToPointX - backXAxios) / 2,
       traceToPointY + (traceToPointY - backTopYPoint) * 1.5,
-      traceToPointX,
-      traceToPointY
+      airplanePathPoint4.x,
+      airplanePathPoint4.y
   );
   winCtx.quadraticCurveTo(
       traceToPointX - (traceToPointX - backXAxios) / 3,
@@ -279,6 +305,17 @@ const drawBackAndAirPlane = (passed) => {
 
   winCtx.fillStyle = backColor;
   winCtx.fill();
+
+  winCtx.translate(airplaneXPosition, airplaneYPosition);
+  winCtx.drawImage(
+      airplaneImgDom,
+      -airplaneOffset,
+      -airplaneSize + airplaneOffset,
+      airplaneSize,
+      airplaneSize
+  );
+
+  winCtx.setTransform(1, 0, 0, 1, 0, 0);
   winCtx.globalAlpha = 1;
 };
 

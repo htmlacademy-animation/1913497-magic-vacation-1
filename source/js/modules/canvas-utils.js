@@ -36,3 +36,17 @@ export const stageHelper = (from, passed, durations, stageIndex, callback) => {
 export const getAnimationTick = (from, to, progress) => {
   return from + progress * (to - from);
 };
+
+export const getBezierPoint = (t, p0, p1, p2, p3) => {
+  const x =
+    (1 - t) ** 3 * p0.x +
+    3 * (1 - t) ** 2 * t * p1.x +
+    3 * (1 - t) * t ** 2 * p2.x +
+    t ** 3 * p3.x;
+  const y =
+    (1 - t) ** 3 * p0.y +
+    3 * (1 - t) ** 2 * t * p1.y +
+    3 * (1 - t) * t ** 2 * p2.y +
+    t ** 3 * p3.y;
+  return {x, y};
+};
