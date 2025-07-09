@@ -58,6 +58,14 @@ const smallTreeY = wh / 2 + smallTreeHeight / 1.7;
 const treeAnimationDelay = 700;
 const treeTranslateFrom = 200;
 
+// back parameters
+const backColor = `#B0C7FF`;
+const backXAxios = ww / 2 - calfSize / 8;
+const backTopYPoint = wh / 2.4;
+const maxBackCicleRadius = 190;
+
+// airplane parameters
+
 // animation vars
 let translateCalfY = 0;
 let rotateCalf = 0;
@@ -72,6 +80,9 @@ let leftSnowTranslateY = leftSnowTranslateStartPoint;
 let rightSnowTranslateY = rightSnowTranslateStartPoint;
 let showTree = 0;
 let translateYTree = 0;
+let backCenterYPoint = backTopYPoint;
+let backRadius = 0;
+let backOpacity = 0;
 
 const drawCalf = (passed) => {
   const durations = [200, 200, 200, 250, 250, 300, 300, 400];
@@ -203,6 +214,37 @@ const drawTree = (passed) => {
   winCtx.globalAlpha = 1;
 };
 
+const drawBackAndAirPlane = (passed) => {
+  const from = 200;
+  const opacityDuration = 400;
+  const animationDuration = 900;
+  const opacityProgress = Math.min((passed - from) / opacityDuration, 1);
+  const animationDurationProgress = Math.min(
+      (passed - from) / animationDuration,
+      1
+  );
+
+  if (passed > from && passed < from + opacityDuration) {
+    backOpacity = opacityProgress * 1;
+  }
+
+  if (passed > from && passed < from + animationDuration) {
+    backRadius = animationDurationProgress * maxBackCicleRadius;
+    backCenterYPoint = getAnimationTick(
+        backTopYPoint,
+        backTopYPoint + maxBackCicleRadius,
+        animationDurationProgress
+    );
+  }
+
+  winCtx.globalAlpha = backOpacity;
+  winCtx.beginPath();
+  winCtx.arc(backXAxios, backCenterYPoint, backRadius, 0, 2 * Math.PI);
+  winCtx.fillStyle = backColor;
+  winCtx.fill();
+  winCtx.globalAlpha = 1;
+};
+
 const draw = (timestamp) => {
   if (prizeScreen.classList.contains(`screen--show`)) {
     // screen active
@@ -215,6 +257,7 @@ const draw = (timestamp) => {
     winCtx.clearRect(0, 0, ww, wh);
     winCtx.save();
 
+    drawBackAndAirPlane(passed);
     drawTree(passed);
     winCtx.drawImage(
         smallTreeImgDom,
