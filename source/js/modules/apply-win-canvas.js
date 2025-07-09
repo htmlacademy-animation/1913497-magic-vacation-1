@@ -62,7 +62,9 @@ const treeTranslateFrom = 200;
 const backColor = `#B0C7FF`;
 const backXAxios = ww / 2 - calfSize / 8;
 const backTopYPoint = wh / 2.4;
-const maxBackCicleRadius = 190;
+const maxBackCicleRadius = 185;
+const traceFinalPointX = backXAxios + maxBackCicleRadius * 2.7;
+const traceFinalPointY = backTopYPoint + maxBackCicleRadius * 0.5;
 
 // airplane parameters
 
@@ -83,6 +85,8 @@ let translateYTree = 0;
 let backCenterYPoint = backTopYPoint;
 let backRadius = 0;
 let backOpacity = 0;
+let traceToPointX = backXAxios;
+let traceToPointY = backTopYPoint;
 
 const drawCalf = (passed) => {
   const durations = [200, 200, 200, 250, 250, 300, 300, 400];
@@ -111,6 +115,7 @@ const drawCalf = (passed) => {
       translateCalfY = getAnimationTick(translateFrom, translateTo, progress);
       rotateCalf = getAnimationTick(rotateFrom, rotateTo, progress);
     }
+
     sum += el;
   });
   winCtx.translate(calfXPosition, translateCalfY);
@@ -200,6 +205,9 @@ const drawTree = (passed) => {
         largeTreeY,
         progress
     );
+  } else if (passed > from + duration) {
+    showTree = 1;
+    translateYTree = largeTreeY;
   }
 
   winCtx.globalAlpha = showTree;
@@ -227,7 +235,6 @@ const drawBackAndAirPlane = (passed) => {
   if (passed > from && passed < from + opacityDuration) {
     backOpacity = opacityProgress * 1;
   }
-
   if (passed > from && passed < from + animationDuration) {
     backRadius = animationDurationProgress * maxBackCicleRadius;
     backCenterYPoint = getAnimationTick(
@@ -235,11 +242,41 @@ const drawBackAndAirPlane = (passed) => {
         backTopYPoint + maxBackCicleRadius,
         animationDurationProgress
     );
+    traceToPointX = getAnimationTick(
+        backXAxios,
+        traceFinalPointX,
+        animationDurationProgress
+    );
+    traceToPointY = getAnimationTick(
+        backTopYPoint,
+        traceFinalPointY,
+        animationDurationProgress
+    );
+  } else if (passed > from + animationDuration) {
+    backRadius = maxBackCicleRadius;
+    backCenterYPoint = backTopYPoint + maxBackCicleRadius;
+    traceToPointX = traceFinalPointX;
+    traceToPointY = traceFinalPointY;
   }
 
   winCtx.globalAlpha = backOpacity;
-  winCtx.beginPath();
   winCtx.arc(backXAxios, backCenterYPoint, backRadius, 0, 2 * Math.PI);
+  winCtx.moveTo(backXAxios, backTopYPoint);
+  winCtx.bezierCurveTo(
+      backXAxios + (traceToPointX - backXAxios) * 0.4,
+      backTopYPoint,
+      traceToPointX - (traceToPointX - backXAxios) / 2,
+      traceToPointY + (traceToPointY - backTopYPoint) * 1.5,
+      traceToPointX,
+      traceToPointY
+  );
+  winCtx.quadraticCurveTo(
+      traceToPointX - (traceToPointX - backXAxios) / 3,
+      backTopYPoint + backRadius * 2,
+      backXAxios,
+      backTopYPoint + backRadius * 2
+  );
+
   winCtx.fillStyle = backColor;
   winCtx.fill();
   winCtx.globalAlpha = 1;
