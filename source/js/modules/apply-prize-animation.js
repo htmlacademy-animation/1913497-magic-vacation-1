@@ -71,9 +71,9 @@ const applyPrizeAnimation = (timestamp) => {
       prize1.count.style.opacity = calculateAppearance(passed, 300, 2000);
       prize1.desc.style.opacity = calculateAppearance(passed, 300, 2000);
       prize1.desc.style.transform = calculateTextShiftFromRight(
-        passed,
-        300,
-        2000
+          passed,
+          300,
+          2000
       );
     } else if (passed > 2000) {
       prize1.count.style.opacity = 1;
@@ -83,9 +83,9 @@ const applyPrizeAnimation = (timestamp) => {
     // first prize nove after 3 sec
     if (passed > 3000 && passed < 3500) {
       prizesItem[0].style.transform = calculateShiftFromRight(
-        passed,
-        500,
-        3000
+          passed,
+          500,
+          3000
       );
     } else if (passed > 3000) {
       prizesItem[0].style.transform = `translateX(0)`;
@@ -105,9 +105,9 @@ const applyPrizeAnimation = (timestamp) => {
       prize2.count.style.opacity = calculateAppearance(passed, 300, 4000);
       prize2.desc.style.opacity = calculateAppearance(passed, 300, 4000);
       prize2.desc.style.transform = calculateTextShiftFromRight(
-        passed,
-        300,
-        4000
+          passed,
+          300,
+          4000
       );
     } else if (passed > 4000) {
       prize2.count.style.opacity = 1;
@@ -137,9 +137,9 @@ const applyPrizeAnimation = (timestamp) => {
       prize3.count.style.opacity = calculateAppearance(passed, 300, 6000);
       prize3.desc.style.opacity = calculateAppearance(passed, 300, 6000);
       prize3.desc.style.transform = calculateTextShiftFromRight(
-        passed,
-        300,
-        6000
+          passed,
+          300,
+          6000
       );
     } else if (passed > 6000) {
       prize3.count.style.opacity = 1;
