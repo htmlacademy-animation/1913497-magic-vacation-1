@@ -1,4 +1,9 @@
-import {easeOut, getAnimationTick, getBezierPoint} from "./canvas-utils";
+import {
+  cubicBezier,
+  easeOut,
+  getAnimationTick,
+  getBezierPoint,
+} from "./canvas-utils";
 
 // global window vars
 let ww = window.innerWidth;
@@ -64,7 +69,7 @@ const treeTranslateFrom = 200;
 const backColor = `#B0C7FF`;
 const backXAxios = ww / 2 - calfSize / 8;
 const backTopYPoint = wh / 2.4;
-const backStartRadius = 15;
+const backStartRadius = 5;
 const maxBackCicleRadius = 185;
 const traceFinalPointX = backXAxios + maxBackCicleRadius * 2.7;
 const traceFinalPointY = backTopYPoint + maxBackCicleRadius * 0.5;
@@ -72,6 +77,7 @@ const traceFinalPointY = backTopYPoint + maxBackCicleRadius * 0.5;
 // airplane parameters
 const airplaneSize = 200;
 const airplaneOffset = 46;
+const aitplaneRotateFrom = 80;
 const airplanePathPoint1 = {x: backXAxios, y: backTopYPoint};
 const airplanePathPoint2 = {
   x: backXAxios + (traceFinalPointX - backXAxios) * 0.4,
@@ -102,6 +108,7 @@ let backRadius = backStartRadius;
 let backOpacity = 0;
 let airplaneXPosition = backXAxios;
 let airplaneYPosition = backTopYPoint;
+let airplaneRotate = aitplaneRotateFrom;
 let curveFirstPoint = {x: 0, y: 0};
 let curveSecondPoint = {x: 0, y: 0};
 let arcPointY = 0;
@@ -244,32 +251,33 @@ const drawTree = (passed) => {
 
 const drawBackAndAirPlane = (passed) => {
   const from = 200;
-  const opacityDuration = 400;
-  const animationDuration = 900;
+  const opacityDuration = 300;
+  const animationDuration = 800;
+  const animationProgress = Math.min((passed - from) / animationDuration, 1);
   const opacityProgress = easeOut(
       Math.min((passed - from) / opacityDuration, 1)
   );
-  const animationProgress = easeOut(
-      Math.min((passed - from) / animationDuration, 1)
-  );
+  const airplaneProgress = cubicBezier(animationProgress, 0.2, 0, 0.4, 1);
 
   if (passed > from && passed < from + opacityDuration) {
     backOpacity = opacityProgress * 1;
+  } else if (passed > from + opacityDuration) {
+    backOpacity = 1;
   }
 
   if (passed > from && passed < from + animationDuration) {
     backRadius = getAnimationTick(
         backStartRadius,
         maxBackCicleRadius,
-        animationProgress
+        airplaneProgress
     );
     backCenterYPoint = getAnimationTick(
         backTopYPoint + backStartRadius,
         backTopYPoint + maxBackCicleRadius,
-        animationProgress
+        airplaneProgress
     );
     const currentPos = getBezierPoint(
-        animationProgress,
+        airplaneProgress,
         airplanePathPoint1,
         airplanePathPoint2,
         airplanePathPoint3,
@@ -280,33 +288,34 @@ const drawBackAndAirPlane = (passed) => {
       x: getAnimationTick(
           backXAxios + (airplaneXPosition - backXAxios) * 0.6,
           backXAxios + (airplaneXPosition - backXAxios) * 0.4,
-          animationProgress
+          airplaneProgress
       ),
       y: getAnimationTick(
           backTopYPoint - (airplaneYPosition - backTopYPoint) * 0.25,
           backTopYPoint,
-          animationProgress
+          airplaneProgress
       ),
     };
     curveSecondPoint = {
       x: getAnimationTick(
           airplaneXPosition - (airplaneXPosition - backXAxios) / 8,
           airplaneXPosition - (airplaneXPosition - backXAxios) / 2,
-          animationProgress
+          airplaneProgress
       ),
       y: getAnimationTick(
           backTopYPoint,
           airplaneYPosition + (airplaneYPosition - backTopYPoint) * 1.5,
-          animationProgress
+          airplaneProgress
       ),
     };
     arcPointY = getAnimationTick(
         backTopYPoint + backRadius * 1.65,
         backTopYPoint + backRadius * 2,
-        animationProgress
+        airplaneProgress
     );
     airplaneXPosition = currentPos.x;
     airplaneYPosition = currentPos.y;
+    airplaneRotate = getAnimationTick(aitplaneRotateFrom, 0, airplaneProgress);
   } else if (passed > from + animationDuration) {
     backRadius = maxBackCicleRadius;
     backCenterYPoint = backTopYPoint + maxBackCicleRadius;
@@ -321,6 +330,7 @@ const drawBackAndAirPlane = (passed) => {
       y: airplanePathPoint4.y + (airplanePathPoint4.y - backTopYPoint) * 1.5,
     };
     arcPointY = backTopYPoint + maxBackCicleRadius * 2;
+    airplaneRotate = 0;
   }
 
   winCtx.globalAlpha = backOpacity;
@@ -345,6 +355,7 @@ const drawBackAndAirPlane = (passed) => {
   winCtx.fill();
 
   winCtx.translate(airplaneXPosition, airplaneYPosition);
+  winCtx.rotate((airplaneRotate * Math.PI) / 180);
   winCtx.drawImage(
       airplaneImgDom,
       -airplaneOffset,
