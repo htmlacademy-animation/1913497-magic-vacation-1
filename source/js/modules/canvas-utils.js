@@ -5,15 +5,19 @@ export const rotateCtx = (ctx, angle, cx, cy) => {
 };
 
 export const easeOut = (progress) => {
-  return 1 - Math.pow(1 - progress, 3);
+  return 1 - Math.pow(1 - progress, 2);
+};
+
+export const easeIn = (progress) => {
+  return Math.pow(progress, 2);
 };
 
 export const easeInOut = (progress) => {
   if (progress < 0.5) {
-    return 4 * progress * progress * progress; // ускорение в начале
+    return 4 * progress * progress * progress;
   } else {
     const f = 2 * progress - 2;
-    return 0.5 * f * f * f + 1; // замедление в конце
+    return 0.5 * f * f * f + 1;
   }
 };
 
