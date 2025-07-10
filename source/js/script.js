@@ -12,6 +12,7 @@ import pageLoad from "./modules/page-load";
 import applyTypography from "./applyTypography.js";
 import drawCloak from "./modules/game-counter.js";
 import applyPrizeAnimation from "./modules/apply-prize-animation.js";
+import applyWinCanvas from "./modules/apply-win-canvas.js";
 
 // init modules
 pageLoad();
@@ -27,6 +28,7 @@ applyTypography();
 
 requestAnimationFrame(drawCloak);
 requestAnimationFrame(applyPrizeAnimation);
+requestAnimationFrame(applyWinCanvas);
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
