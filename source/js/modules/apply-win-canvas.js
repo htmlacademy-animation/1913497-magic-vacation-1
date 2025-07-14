@@ -3,7 +3,8 @@ import {
   easeOut,
   getAnimationTick,
   getBezierPoint,
-} from "./canvas-utils";
+  getProgress,
+} from "./utils";
 
 // global window vars
 let ww = window.innerWidth;
@@ -16,18 +17,19 @@ const winCtx = winCanvasDom.getContext(`2d`);
 const prizeScreen = document.getElementById(`result`);
 
 // create image objects
-let iceImgDom = new Image();
-iceImgDom.src = `/img/module-4/win-primary-images/ice.png`;
-let calfImgDom = new Image();
-calfImgDom.src = `/img/module-4/win-primary-images/sea-calf-2.png`;
-let snowImgDom = new Image();
-snowImgDom.src = `/img/module-4/win-primary-images/snowflake.png`;
-let largeTreeImgDom = new Image();
-largeTreeImgDom.src = `/img/module-4/win-primary-images/tree 2.png`;
-let smallTreeImgDom = new Image();
-smallTreeImgDom.src = `/img/module-4/win-primary-images/tree.png`;
-let airplaneImgDom = new Image();
-airplaneImgDom.src = `/img/module-4/win-primary-images/airplane.png`;
+const images = {
+  ice: `/img/module-4/win-primary-images/ice.png`,
+  calf: `/img/module-4/win-primary-images/sea-calf-2.png`,
+  snow: `/img/module-4/win-primary-images/snowflake.png`,
+  tree1: `/img/module-4/win-primary-images/tree.png`,
+  tree2: `/img/module-4/win-primary-images/tree 2.png`,
+  airplane: `/img/module-4/win-primary-images/airplane.png`,
+};
+for (const [key, value] of Object.entries(images)) {
+  const imgDom = new Image();
+  imgDom.src = value;
+  images[key] = imgDom;
+}
 
 // ice parameters
 const iceWidth = 408;
@@ -130,7 +132,7 @@ const drawCalf = (passed) => {
 
   let sum = 400;
   durations.forEach((el, index) => {
-    const progress = Math.min((passed - sum) / el, 1);
+    const progress = getProgress(passed, sum, el);
     const translateFrom = translateYChanges[index];
     const translateTo = translateYChanges[index + 1];
     const rotateFrom = rotateChanges[index];
@@ -143,195 +145,157 @@ const drawCalf = (passed) => {
 
     sum += el;
   });
+
   winCtx.translate(calfXPosition, translateCalfY);
   winCtx.rotate((rotateCalf * Math.PI) / 180);
 
-  winCtx.drawImage(iceImgDom, iceX, iceY);
-  winCtx.drawImage(calfImgDom, calfX, calfY, calfSize, calfSize);
-  winCtx.setTransform(1, 0, 0, 1, 0, 0);
+  winCtx.drawImage(images.ice, iceX, iceY);
+  winCtx.drawImage(images.calf, calfX, calfY, calfSize, calfSize);
 };
 
 const drawSnows = (passed) => {
   const from = snowAnimationDelay;
   const opacityDuration = 500;
-  const opacityProgress = easeOut(
-      Math.min((passed - from) / opacityDuration, 1)
+  const opacityProgress = getProgress(passed, from, opacityDuration, easeOut);
+  const leftStageProgress = getProgress(
+      passed,
+      snowTranslateFrom,
+      snowAnimationDuration
   );
+  const rightStageProgress = getProgress(
+      passed,
+      snowTranslateFromDelayed,
+      snowAnimationDuration
+  );
+  showSnows = opacityProgress * 1;
 
-  if (passed > from && passed < from + opacityDuration) {
-    showSnows = opacityProgress * 1;
-  }
-
-  if (passed > from && passed > snowTranslateFrom && passed < snowTranslateTo) {
-    const stageProgress = Math.min(
-        (passed - snowTranslateFrom) / snowAnimationDuration,
-        1
-    );
-    leftSnowTranslateY = getAnimationTick(
-        leftSnowTranslateStartPoint,
-        -leftSnowTranslateStartPoint,
-        stageProgress
-    );
-  } else if (passed > snowTranslateTo) {
+  if (passed > snowTranslateTo) {
     snowTranslateFrom = snowTranslateTo;
     snowTranslateTo += snowAnimationDuration;
     leftSnowTranslateStartPoint = -leftSnowTranslateStartPoint;
+  } else {
+    leftSnowTranslateY = getAnimationTick(
+        leftSnowTranslateStartPoint,
+        -leftSnowTranslateStartPoint,
+        leftStageProgress
+    );
   }
-  if (
-    passed > from &&
-    passed > snowTranslateFromDelayed &&
-    passed < snowTranslateToDelayed
-  ) {
-    const stageProgress = Math.min(
-        (passed - snowTranslateFromDelayed) / snowAnimationDuration,
-        1
-    );
-    rightSnowTranslateY = getAnimationTick(
-        rightSnowTranslateStartPoint,
-        -rightSnowTranslateStartPoint,
-        stageProgress
-    );
-  } else if (passed > snowTranslateToDelayed) {
+  if (passed > snowTranslateToDelayed) {
     snowTranslateFromDelayed = snowTranslateToDelayed;
     snowTranslateToDelayed += snowAnimationDuration;
     rightSnowTranslateStartPoint = -rightSnowTranslateStartPoint;
+  } else {
+    rightSnowTranslateY = getAnimationTick(
+        rightSnowTranslateStartPoint,
+        -rightSnowTranslateStartPoint,
+        rightStageProgress
+    );
   }
 
   winCtx.globalAlpha = showSnows;
 
   winCtx.drawImage(
-      snowImgDom,
+      images.snow,
       leftSnowX,
       leftSnowY + leftSnowTranslateY,
       leftSnowSize,
       leftSnowSize
   );
+
   winCtx.translate(rightSnowX, rightSnowY);
   winCtx.scale(-1, 1);
   winCtx.translate(-rightSnowX, -rightSnowY);
   winCtx.drawImage(
-      snowImgDom,
+      images.snow,
       rightSnowX,
       rightSnowY + rightSnowTranslateY,
       rightSnowSize,
       rightSnowSize
   );
-  winCtx.setTransform(1, 0, 0, 1, 0, 0);
-  winCtx.globalAlpha = 1;
 };
 
 const drawTree = (passed) => {
   const from = treeAnimationDelay;
   const duration = 400;
-  const progress = easeOut(Math.min((passed - from) / duration, 1));
+  const progress = getProgress(passed, from, duration, easeOut);
 
-  if (passed > from && passed < from + duration) {
-    showTree = progress * 1;
-    translateYTree = getAnimationTick(
-        largeTreeY + treeTranslateFrom,
-        largeTreeY,
-        progress
-    );
-  } else if (passed > from + duration) {
-    showTree = 1;
-    translateYTree = largeTreeY;
-  }
+  showTree = progress * 1;
+  translateYTree = getAnimationTick(
+      largeTreeY + treeTranslateFrom,
+      largeTreeY,
+      progress
+  );
 
   winCtx.globalAlpha = showTree;
   winCtx.drawImage(
-      largeTreeImgDom,
+      images.tree1,
       largeTreeX,
       translateYTree,
       largeTreeWidth,
       largeTreeHeight
   );
-  winCtx.setTransform(1, 0, 0, 1, 0, 0);
-  winCtx.globalAlpha = 1;
 };
 
 const drawBackAndAirPlane = (passed) => {
   const from = 200;
   const opacityDuration = 300;
   const animationDuration = 800;
-  const animationProgress = Math.min((passed - from) / animationDuration, 1);
-  const opacityProgress = easeOut(
-      Math.min((passed - from) / opacityDuration, 1)
-  );
+  const animationProgress = getProgress(passed, from, animationDuration);
+  const opacityProgress = getProgress(passed, from, opacityDuration, easeOut);
   const airplaneProgress = cubicBezier(animationProgress, 0.2, 0, 0.4, 1);
 
-  if (passed > from && passed < from + opacityDuration) {
-    backOpacity = opacityProgress * 1;
-  } else if (passed > from + opacityDuration) {
-    backOpacity = 1;
-  }
+  backOpacity = opacityProgress * 1;
 
-  if (passed > from && passed < from + animationDuration) {
-    backRadius = getAnimationTick(
-        backStartRadius,
-        maxBackCicleRadius,
-        airplaneProgress
-    );
-    backCenterYPoint = getAnimationTick(
-        backTopYPoint + backStartRadius,
-        backTopYPoint + maxBackCicleRadius,
-        airplaneProgress
-    );
-    const currentPos = getBezierPoint(
-        airplaneProgress,
-        airplanePathPoint1,
-        airplanePathPoint2,
-        airplanePathPoint3,
-        airplanePathPoint4
-    );
+  backRadius = getAnimationTick(
+      backStartRadius,
+      maxBackCicleRadius,
+      airplaneProgress
+  );
+  backCenterYPoint = getAnimationTick(
+      backTopYPoint + backStartRadius,
+      backTopYPoint + maxBackCicleRadius,
+      airplaneProgress
+  );
+  const currentPos = getBezierPoint(
+      airplaneProgress,
+      airplanePathPoint1,
+      airplanePathPoint2,
+      airplanePathPoint3,
+      airplanePathPoint4
+  );
 
-    curveFirstPoint = {
-      x: getAnimationTick(
-          backXAxios + (airplaneXPosition - backXAxios) * 0.6,
-          backXAxios + (airplaneXPosition - backXAxios) * 0.4,
-          airplaneProgress
-      ),
-      y: getAnimationTick(
-          backTopYPoint - (airplaneYPosition - backTopYPoint) * 0.25,
-          backTopYPoint,
-          airplaneProgress
-      ),
-    };
-    curveSecondPoint = {
-      x: getAnimationTick(
-          airplaneXPosition - (airplaneXPosition - backXAxios) / 8,
-          airplaneXPosition - (airplaneXPosition - backXAxios) / 2,
-          airplaneProgress
-      ),
-      y: getAnimationTick(
-          backTopYPoint,
-          airplaneYPosition + (airplaneYPosition - backTopYPoint) * 1.5,
-          airplaneProgress
-      ),
-    };
-    arcPointY = getAnimationTick(
-        backTopYPoint + backRadius * 1.65,
-        backTopYPoint + backRadius * 2,
+  curveFirstPoint = {
+    x: getAnimationTick(
+        backXAxios + (airplaneXPosition - backXAxios) * 0.6,
+        backXAxios + (airplaneXPosition - backXAxios) * 0.4,
         airplaneProgress
-    );
-    airplaneXPosition = currentPos.x;
-    airplaneYPosition = currentPos.y;
-    airplaneRotate = getAnimationTick(aitplaneRotateFrom, 0, airplaneProgress);
-  } else if (passed > from + animationDuration) {
-    backRadius = maxBackCicleRadius;
-    backCenterYPoint = backTopYPoint + maxBackCicleRadius;
-    airplaneXPosition = airplanePathPoint4.x;
-    airplaneYPosition = airplanePathPoint4.y;
-    curveFirstPoint = {
-      x: backXAxios + (airplanePathPoint4.x - backXAxios) * 0.4,
-      y: backTopYPoint,
-    };
-    curveSecondPoint = {
-      x: airplanePathPoint4.x - (airplanePathPoint4.x - backXAxios) / 2,
-      y: airplanePathPoint4.y + (airplanePathPoint4.y - backTopYPoint) * 1.5,
-    };
-    arcPointY = backTopYPoint + maxBackCicleRadius * 2;
-    airplaneRotate = 0;
-  }
+    ),
+    y: getAnimationTick(
+        backTopYPoint - (airplaneYPosition - backTopYPoint) * 0.25,
+        backTopYPoint,
+        airplaneProgress
+    ),
+  };
+  curveSecondPoint = {
+    x: getAnimationTick(
+        airplaneXPosition - (airplaneXPosition - backXAxios) / 8,
+        airplaneXPosition - (airplaneXPosition - backXAxios) / 2,
+        airplaneProgress
+    ),
+    y: getAnimationTick(
+        backTopYPoint,
+        airplaneYPosition + (airplaneYPosition - backTopYPoint) * 1.5,
+        airplaneProgress
+    ),
+  };
+  arcPointY = getAnimationTick(
+      backTopYPoint + backRadius * 1.65,
+      backTopYPoint + backRadius * 2,
+      airplaneProgress
+  );
+  airplaneXPosition = currentPos.x;
+  airplaneYPosition = currentPos.y;
+  airplaneRotate = getAnimationTick(aitplaneRotateFrom, 0, airplaneProgress);
 
   winCtx.globalAlpha = backOpacity;
   winCtx.arc(backXAxios, backCenterYPoint, backRadius, 0, 2 * Math.PI);
@@ -350,23 +314,34 @@ const drawBackAndAirPlane = (passed) => {
       backXAxios,
       backTopYPoint + backRadius * 2
   );
-
   winCtx.fillStyle = backColor;
   winCtx.fill();
 
   winCtx.translate(airplaneXPosition, airplaneYPosition);
   winCtx.rotate((airplaneRotate * Math.PI) / 180);
   winCtx.drawImage(
-      airplaneImgDom,
+      images.airplane,
       -airplaneOffset,
       -airplaneSize + airplaneOffset,
       airplaneSize,
       airplaneSize
   );
-
-  winCtx.setTransform(1, 0, 0, 1, 0, 0);
-  winCtx.globalAlpha = 1;
 };
+
+const draws = [
+  drawBackAndAirPlane,
+  drawTree,
+  () =>
+    winCtx.drawImage(
+        images.tree2,
+        smallTreeX,
+        smallTreeY,
+        smallTreeWidth,
+        smallTreeHeight
+    ),
+  drawCalf,
+  drawSnows,
+];
 
 const draw = (timestamp) => {
   if (prizeScreen.classList.contains(`screen--show`)) {
@@ -378,21 +353,12 @@ const draw = (timestamp) => {
     winCanvasDom.height = wh;
     const passed = timestamp - start;
     winCtx.clearRect(0, 0, ww, wh);
-    winCtx.save();
 
-    drawBackAndAirPlane(passed);
-    drawTree(passed);
-    winCtx.drawImage(
-        smallTreeImgDom,
-        smallTreeX,
-        smallTreeY,
-        smallTreeWidth,
-        smallTreeHeight
-    );
-    drawCalf(passed);
-    drawSnows(passed);
-
-    winCtx.restore();
+    draws.forEach((func) => {
+      winCtx.save();
+      func(passed);
+      winCtx.restore();
+    });
   } else {
     // screen unactive
     start = null;

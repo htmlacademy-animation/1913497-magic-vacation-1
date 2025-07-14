@@ -40,9 +40,6 @@ export const getBezierPoint = (t, p0, p1, p2, p3) => {
 };
 
 export const cubicBezier = (progress, x1, y1, x2, y2) => {
-  // Используем алгоритм для вычисления кривой bezier по прогрессу
-
-  // Вспомогательная функция для вычисления кубической кривой по t
   function bezier(t, p0, p1, p2, p3) {
     const cX = 3 * (p1 - p0);
     const bX = 3 * (p2 - p1) - cX;
@@ -51,7 +48,6 @@ export const cubicBezier = (progress, x1, y1, x2, y2) => {
     return ((aX * t + bX) * t + cX) * t + p0;
   }
 
-  // Вспомогательная функция для вычисления производной кривой bezier
   function bezierDerivative(t, p0, p1, p2, p3) {
     const cX = 3 * (p1 - p0);
     const bX = 3 * (p2 - p1) - cX;
@@ -60,10 +56,7 @@ export const cubicBezier = (progress, x1, y1, x2, y2) => {
     return (3 * aX * t + 2 * bX) * t + cX;
   }
 
-  // Используем численный метод для нахождения t, такого что bezier_x(t) ≈ progress
-  // так как нам нужно найти t по x (progress), а bezier по x и y связаны через t
-
-  let t = progress; // начальное приближение
+  let t = progress;
   for (let i = 0; i < 10; i++) {
     const x = bezier(t, 0, x1, x2, 1);
     const dx = bezierDerivative(t, 0, x1, x2, 1);
@@ -71,11 +64,14 @@ export const cubicBezier = (progress, x1, y1, x2, y2) => {
     if (Math.abs(error) < 0.001) {
       break;
     }
-    t -= error / dx; // итеративное уточнение (метод Ньютона)
-    t = Math.min(Math.max(t, 0), 1); // ограничение по диапазону
+    t -= error / dx;
+    t = Math.min(Math.max(t, 0), 1);
   }
 
-  // Теперь вычисляем y по найденному t
   const y = bezier(t, 0, y1, y2, 1);
   return y;
+};
+
+export const getProgress = (passed, from, duration, easing = (p) => p) => {
+  return Math.max(easing(Math.min((passed - from) / duration, 1)), 0);
 };
