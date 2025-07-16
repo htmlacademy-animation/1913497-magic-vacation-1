@@ -4,6 +4,16 @@ export const rotateCtx = (ctx, angle, cx, cy) => {
   ctx.translate(-cx, -cy);
 };
 
+export const scaleCtx = (ctx, cx, cy, scaleX, scaleY) => {
+  ctx.translate(cx, cy);
+  if (scaleY) {
+    ctx.scale(scaleX, scaleY);
+  } else {
+    ctx.scale(scaleX, scaleX);
+  }
+  ctx.translate(-cx, -cy);
+};
+
 export const easeOut = (progress) => {
   return 1 - Math.pow(1 - progress, 2);
 };
