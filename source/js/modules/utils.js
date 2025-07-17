@@ -83,5 +83,5 @@ export const cubicBezier = (progress, x1, y1, x2, y2) => {
 };
 
 export const getProgress = (passed, from, duration, easing = (p) => p) => {
-  return Math.max(easing(Math.min((passed - from) / duration, 1)), 0);
+  return easing(Math.max(Math.min((passed - from) / duration, 1), 0));
 };
