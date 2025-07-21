@@ -42,48 +42,55 @@ const keyY = 60;
 const keyScaleFrom = 0.8;
 
 // objects parameters
-const objectSize = 150;
+const objectSize = 15;
 const rotateObjectFrom = 50;
+
+// crocodile parameters
+const crocodileSize = 700;
+const crocodileXFrom = keyX + 18;
+const crocodileYFrom = keyY - 10;
 
 // animation vars
 let keyScale = keyScaleFrom;
+let crocodileX = crocodileXFrom;
+let crocodileY = crocodileYFrom;
 let objectScale = 0;
 let objects = {
   flamingo: {
     x: keyX,
     y: keyY,
-    xTo: 35,
-    yTo: 50,
+    xTo: keyX - 15,
+    yTo: keyY - 10,
     rotate: rotateObjectFrom,
   },
-  // leaf: {
-  //   x: keyX,
-  //   y: keyY,
-  //   xTo: 35,
-  //   yTo: 50,
-  //   rotate: rotateObjectFrom,
-  // },
-  // saturn: {
-  //   x: keyX,
-  //   y: keyY,
-  //   xTo: 35,
-  //   yTo: 50,
-  //   rotate: rotateObjectFrom,
-  // },
-  // snowflake: {
-  //   x: keyX,
-  //   y: keyY,
-  //   xTo: 35,
-  //   yTo: 50,
-  //   rotate: rotateObjectFrom,
-  // },
-  // watermelon: {
-  //   x: keyX,
-  //   y: keyY,
-  //   xTo: 35,
-  //   yTo: 50,
-  //   rotate: rotateObjectFrom,
-  // },
+  leaf: {
+    x: keyX,
+    y: keyY,
+    xTo: keyX + 18,
+    yTo: keyY - 20,
+    rotate: rotateObjectFrom,
+  },
+  saturn: {
+    x: keyX,
+    y: keyY,
+    xTo: keyX + 16,
+    yTo: keyY + 15,
+    rotate: rotateObjectFrom,
+  },
+  snowflake: {
+    x: keyX,
+    y: keyY,
+    xTo: keyX + 10,
+    yTo: keyY,
+    rotate: rotateObjectFrom,
+  },
+  watermelon: {
+    x: keyX,
+    y: keyY,
+    xTo: keyX - 20,
+    yTo: keyY + 12,
+    rotate: rotateObjectFrom,
+  },
 };
 
 const drawKey = (passed) => {
@@ -108,8 +115,8 @@ const drawKey = (passed) => {
 
 const drawObjects = (passed) => {
   const from = 300;
-  const durationOut = 500;
-  const durationIn = 400;
+  const durationOut = 600;
+  const durationIn = 600;
   const progressOut = getProgress(passed, from, durationOut, easeOut);
   const progressIn = getProgress(
       passed,
@@ -119,6 +126,7 @@ const drawObjects = (passed) => {
   );
   const ws = ww / 100;
   const hs = wh / 100;
+  const size = Math.min(ws, hs) * objectSize;
 
   objectScale = getAnimationTick(0, 1, progressOut);
 
@@ -145,16 +153,59 @@ const drawObjects = (passed) => {
     );
     loseCtx.drawImage(
         images[key],
-        objects[key].x * ws - objectSize / 2,
-        objects[key].y * hs - objectSize / 2,
-        objectSize,
-        objectSize
+        objects[key].x * ws - size / 2,
+        objects[key].y * hs - size / 2,
+        size,
+        size
     );
     loseCtx.restore();
   }
 };
 
-const draws = [drawKey, drawObjects];
+const drawCrocodile = (passed) => {
+  const from = 900;
+  const duration = 600;
+  const progress = getProgress(passed, from, duration, easeOut);
+  const ws = ww / 100;
+  const hs = wh / 100;
+  const x = keyX * ws;
+  const y = keyY * hs;
+  const keyCircleYCenter = y - keyHeight / 4.7;
+
+  crocodileX = getAnimationTick(x + crocodileSize / 2, x, progress);
+  crocodileY = getAnimationTick(
+      y - crocodileSize / 7,
+      y + keyHeight / 5,
+      progress
+  );
+
+  loseCtx.beginPath();
+  loseCtx.moveTo(x + keyWidth / 2, wh);
+  loseCtx.lineTo(x + keyWidth / 2, y + keyHeight / 2);
+  loseCtx.lineTo(x + keyWidth / 3, y);
+  loseCtx.arc(
+      x,
+      keyCircleYCenter,
+      keyWidth / 2,
+      0.2 * Math.PI,
+      1.5 * Math.PI,
+      true
+  );
+  loseCtx.lineTo(x, 0);
+  loseCtx.lineTo(0, 0);
+  loseCtx.lineTo(0, wh);
+  loseCtx.clip();
+
+  loseCtx.drawImage(
+      images.crocodile,
+      crocodileX - crocodileSize / 2,
+      crocodileY - crocodileSize / 2,
+      crocodileSize,
+      crocodileSize
+  );
+};
+
+const draws = [drawKey, drawObjects, drawCrocodile];
 
 const updateSize = () => {
   ww = window.innerWidth;
