@@ -50,10 +50,23 @@ const crocodileSize = 700;
 const crocodileXFrom = keyX + 18;
 const crocodileYFrom = keyY - 10;
 
+// drop parameters
+const dropWidth = 39;
+const dropHeight = 59;
+const dropMoveGap = 60;
+const dropCycleDelay = 300;
+const dropFrom = 1500;
+const dropCycleCount = 3;
+
 // animation vars
 let keyScale = keyScaleFrom;
 let crocodileX = crocodileXFrom;
 let crocodileY = crocodileYFrom;
+let dropFromStage = dropFrom;
+let dropCycle = dropCycleCount;
+let dropYPosition = 0;
+let dropScale = 0;
+let dropOpacity = 1;
 let objectScale = 0;
 let objects = {
   flamingo: {
@@ -205,7 +218,55 @@ const drawCrocodile = (passed) => {
   );
 };
 
-const draws = [drawKey, drawObjects, drawCrocodile];
+const drawDrop = (passed) => {
+  const duration = 400;
+  const scaleProgress = getProgress(passed, dropFromStage, duration, easeOut);
+  const moveProgress = getProgress(
+      passed,
+      dropFromStage + duration,
+      duration,
+      easeOut
+  );
+  const opacityProgress = getProgress(
+      passed,
+      dropFromStage + duration + duration / 2,
+      duration,
+      easeOut
+  );
+  const ws = ww / 100;
+  const hs = wh / 100;
+  const x = keyX * ws;
+  const y = keyY * hs;
+  const dropX = x - crocodileSize / 25;
+  const dropYFrom = y + crocodileSize / 11;
+  const dropYTo = dropYFrom + dropMoveGap;
+
+  if (passed === 0) {
+    dropFromStage = dropFrom;
+    dropCycle = dropCycleCount;
+  }
+
+  if (opacityProgress === 1 && dropCycle - 1) {
+    dropFromStage += duration * 3 + dropCycleDelay;
+    dropCycle -= 1;
+  }
+
+  dropScale = scaleProgress * 1;
+  dropYPosition = getAnimationTick(dropYFrom, dropYTo, moveProgress);
+  dropOpacity = 1 - opacityProgress * 1;
+  scaleCtx(loseCtx, dropX, dropYFrom, dropScale, dropScale);
+  loseCtx.globalAlpha = dropOpacity;
+
+  loseCtx.drawImage(
+      images.drop,
+      dropX - dropWidth / 2,
+      dropYPosition,
+      dropWidth,
+      dropHeight
+  );
+};
+
+const draws = [drawKey, drawObjects, drawCrocodile, drawDrop];
 
 const updateSize = () => {
   ww = window.innerWidth;
